@@ -8,7 +8,7 @@
 
 // Import config service with lazy loading to avoid circular dependencies
 import type { ConfigService } from './config-service.ts';
-import { nowISO } from 'tasker-utils/timestamps';
+import { nowISO } from 'sequential-utils/timestamps';
 
 // Log level types
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';

@@ -7,7 +7,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4';
 import { type FlowStateStorage, type FlowStateStoredTask } from 'npm:flowstate@latest';
-import { nowISO } from 'tasker-utils/timestamps';
+import { nowISO } from 'sequential-utils/timestamps';
 
 // Environment variables
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;

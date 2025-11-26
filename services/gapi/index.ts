@@ -5,7 +5,7 @@ import { BaseHttpHandler, HttpStatus, createHealthCheckResponse } from "../_shar
 import { config } from "../_shared/config-service.ts"
 import { serviceRegistry } from "../_shared/service-registry.ts"
 import logger from 'tasker-logging'
-import { nowISO } from 'tasker-utils/timestamps'
+import { nowISO } from 'sequential-utils/timestamps'
 
 // In-memory token cache by scope - persists between requests
 const tokenCache = new Map<string, {

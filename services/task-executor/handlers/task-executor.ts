@@ -2,7 +2,7 @@ import { jsonResponse, formatErrorResponse, formatLogMessage } from "../utils/re
 import { fetchTaskFromDatabase, database, type TaskFunction } from "../services/database.ts";
 import { generateModuleCode } from "../services/module-generator.ts";
 import { createServiceRoleClient } from "../../_shared/database-service.ts";
-import { nowISO } from 'tasker-utils/timestamps';
+import { nowISO } from 'sequential-utils/timestamps';
 
 // Get supabase client from unified database service
 const supabaseClient = createServiceRoleClient();

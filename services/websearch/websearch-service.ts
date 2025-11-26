@@ -4,7 +4,7 @@
  * Provides a basic web search functionality using DuckDuckGo
  */
 
-import { nowISO } from 'tasker-utils/timestamps';
+import { nowISO } from 'sequential-utils/timestamps';
 
 // Define the search result interface
 export interface SearchResult {

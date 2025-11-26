@@ -2,7 +2,7 @@
  * Utilities for formatting responses
  */
 
-import { nowISO } from 'tasker-utils/timestamps';
+import { nowISO } from 'sequential-utils/timestamps';
 
 /**
  * Safely stringify objects including handling of:
