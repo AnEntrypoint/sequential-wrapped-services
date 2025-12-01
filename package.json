@@ -1,11 +1,13 @@
 {
-  "name": "sequential-wrapped-services",
+  "name": "@sequential/sequential-wrapped-services",
   "version": "1.1.1",
   "description": "Runtime-agnostic wrapped services for sequential-runner (Google APIs, keystore, database, etc.)",
   "type": "module",
-  "main": "cli.js",
+  "main": "index.js",
   "exports": {
-    ".": "./cli.js"
+    ".": "./index.js",
+    "./cli": "./cli.js",
+    "./shared/*": "./shared/*"
   },
   "bin": {
     "sequential": "./cli.js"
@@ -34,14 +36,14 @@
     "shared"
   ],
   "dependencies": {
-    "sequential-http-utils": "^1.0.0",
-    "sequential-validators": "^1.0.0",
-    "sequential-logging": "^1.0.0",
-    "sequential-utils": "^1.0.0"
+    "@sequential/sequential-http-utils": "^1.0.0",
+    "@sequential/sequential-validators": "^1.0.0",
+    "@sequential/sequential-logging": "^1.0.0",
+    "@sequential/sequential-utils": "^1.0.0"
   },
   "peerDependencies": {
-    "sequential-runner": "*",
-    "sequential-adaptor": "*"
+    "@sequential/sequential-runner": "*",
+    "@sequential/sequential-adaptor": "*"
   },
   "devDependencies": {
     "dotenv": "^16.4.7"
