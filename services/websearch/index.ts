@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/std@0.177.0/http/server.ts";
 import websearch from "./websearch-service.ts";
 import { BaseHttpHandler, HttpStatus, createHealthCheckResponse } from "../_shared/http-handler.ts";
 import { config } from "../_shared/config-service.ts";
-import { nowISO } from 'sequential-utils/timestamps';
+import { nowISO } from '@sequential/sequential-utils/timestamps';
 
 // Define type for websearch service methods
 type WebSearchService = typeof websearch;

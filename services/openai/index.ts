@@ -4,7 +4,7 @@ import { BaseHttpHandler, HttpStatus, createHealthCheckResponse } from "../_shar
 import { config } from "../_shared/config-service.ts";
 import { serviceRegistry } from "../_shared/service-registry.ts";
 import logger from 'tasker-logging';
-import { nowISO } from 'sequential-utils/timestamps';
+import { nowISO } from '@sequential/sequential-utils/timestamps';
 
 let cachedApiKey: string | null = null;
 

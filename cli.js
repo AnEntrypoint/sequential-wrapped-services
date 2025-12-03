@@ -1,3 +1,4 @@
+import logger from '@sequential/sequential-logging';
 #!/usr/bin/env node
 
 /**
@@ -16,11 +17,10 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { nowISO } from 'sequential-utils/timestamps';
+import { nowISO } from '@sequential/sequential-utils/timestamps';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Boilerplate service templates
 const boilerplateServices = {
   'hello-world': {
     'index.ts': `import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -156,7 +156,6 @@ if (import.meta.main) {
   }
 };
 
-// Create boilerplate services in current directory
 function createBoilerplateServices() {
   const servicesDir = path.join(process.cwd(), 'services');
 
@@ -164,7 +163,7 @@ function createBoilerplateServices() {
     return servicesDir;
   }
 
-  console.log('📦 Creating boilerplate services directory...\n');
+  logger.info('📦 Creating boilerplate services directory...\n');
 
   fs.mkdirSync(servicesDir, { recursive: true });
 
@@ -177,19 +176,18 @@ function createBoilerplateServices() {
       fs.writeFileSync(filePath, content);
     }
 
-    console.log(`✅ Created service: ${serviceName}`);
+    logger.info(`✅ Created service: ${serviceName}`);
   }
 
-  console.log(`\n📁 Services created at: ${servicesDir}\n`);
-  console.log('Each service has:');
-  console.log('  - /health endpoint for health checks');
-  console.log('  - /call endpoint for service calls');
-  console.log('  - Deno-compatible TypeScript implementation\n');
+  logger.info(`\n📁 Services created at: ${servicesDir}\n`);
+  logger.info('Each service has:');
+  logger.info('  - /health endpoint for health checks');
+  logger.info('  - /call endpoint for service calls');
+  logger.info('  - Deno-compatible TypeScript implementation\n');
 
   return servicesDir;
 }
 
-// Parse arguments
 const args = process.argv.slice(2);
 const config = {
   basePort: 3100,
@@ -214,12 +212,10 @@ for (let i = 0; i < args.length; i++) {
   }
 }
 
-// Find services directory by searching current directory and parents
 function findServicesDir() {
   let current = process.cwd();
   const root = path.parse(current).root;
 
-  // First, search current and parent directories
   while (current !== root) {
     const servicesPath = path.join(current, 'services');
     if (fs.existsSync(servicesPath) && fs.statSync(servicesPath).isDirectory()) {
@@ -228,7 +224,6 @@ function findServicesDir() {
     current = path.dirname(current);
   }
 
-  // Check if we're inside the tasker-wrapped-services package itself
   const packageServicesPath = path.join(__dirname, 'services');
   const cwd = process.cwd();
   const iInsidePackage = cwd.includes(__dirname);
@@ -240,14 +235,13 @@ function findServicesDir() {
   return null;
 }
 
-// Discover available services
 function discoverServices() {
   let servicesDir = findServicesDir();
 
   if (!servicesDir) {
-    console.log('⚠️  No services directory found');
+    logger.info('⚠️  No services directory found');
     servicesDir = createBoilerplateServices();
-    console.log('✅ Boilerplate created, discovering services...\n');
+    logger.info('✅ Boilerplate created, discovering services...\n');
   }
 
   const services = {};
@@ -272,7 +266,6 @@ function discoverServices() {
   return { services, servicesDir };
 }
 
-// Filter services based on config
 function filterServices(allServices) {
   if (!config.services) {
     return allServices;
@@ -287,7 +280,6 @@ function filterServices(allServices) {
   return filtered;
 }
 
-// Assign ports to services
 function assignPorts(services) {
   const serviceNames = Object.keys(services).sort();
   const serviceArray = serviceNames.map((name, index) => {
@@ -297,29 +289,25 @@ function assignPorts(services) {
   return serviceArray;
 }
 
-// Start services
 async function startServices(servicesList, servicesDir) {
-  console.log('🚀 Starting Wrapped Services');
-  console.log(`📦 Runtime: ${config.runtime}`);
-  console.log(`🔧 Services: ${servicesList.map(s => s.name).join(', ')}`);
-  console.log(`📁 Services Dir: ${servicesDir}`);
-  console.log('');
+  logger.info('🚀 Starting Wrapped Services');
+  logger.info(`📦 Runtime: ${config.runtime}`);
+  logger.info(`🔧 Services: ${servicesList.map(s => s.name).join(', ')}`);
+  logger.info(`📁 Services Dir: ${servicesDir}`);
+  logger.info('');
 
   const processes = [];
 
   for (const service of servicesList) {
-    console.log(`⏳ Starting ${service.name} on port ${service.port}...`);
+    logger.info(`⏳ Starting ${service.name} on port ${service.port}...`);
 
-    // Create service entry script
     const entryScript = path.join(service.path, 'index.ts');
 
     if (!fs.existsSync(entryScript)) {
-      console.warn(`⚠️  No entry point found for ${service.name}`);
+      logger.warn(`⚠️  No entry point found for ${service.name}`);
       continue;
     }
 
-    // TODO: Start service based on runtime
-    // For now, just register in service registry
     processes.push({
       name: service.name,
       port: service.port,
@@ -327,15 +315,13 @@ async function startServices(servicesList, servicesDir) {
     });
   }
 
-  // Output service registry
-  console.log('\n✅ Services Ready');
-  console.log('─'.repeat(60));
+  logger.info('\n✅ Services Ready');
+  logger.info('─'.repeat(60));
   for (const proc of processes) {
-    console.log(`${proc.name.padEnd(25)} → ${proc.url}`);
+    logger.info(`${proc.name.padEnd(25)} → ${proc.url}`);
   }
-  console.log('─'.repeat(60));
+  logger.info('─'.repeat(60));
 
-  // Create registry file in the current working directory
   const registryPath = path.join(process.cwd(), '.service-registry.json');
   fs.writeFileSync(registryPath, JSON.stringify({
     timestamp: nowISO(),
@@ -343,19 +329,17 @@ async function startServices(servicesList, servicesDir) {
     services: processes
   }, null, 2));
 
-  console.log(`\n📝 Registry: ${registryPath}`);
-  console.log('\nPress Ctrl+C to stop all services\n');
+  logger.info(`\n📝 Registry: ${registryPath}`);
+  logger.info('\nPress Ctrl+C to stop all services\n');
 
-  // Keep process alive
   await new Promise(resolve => {
     process.on('SIGINT', () => {
-      console.log('\n\n👋 Stopping services...');
+      logger.info('\n\n👋 Stopping services...');
       process.exit(0);
     });
   });
 }
 
-// Main
 async function main() {
   const discovery = discoverServices();
   const { services: allServices, servicesDir } = discovery;
@@ -363,7 +347,7 @@ async function main() {
   const assigned = assignPorts(filtered);
 
   if (assigned.length === 0) {
-    console.error('❌ No services found to start');
+    logger.error('❌ No services found to start');
     process.exit(1);
   }
 
@@ -371,6 +355,6 @@ async function main() {
 }
 
 main().catch(err => {
-  console.error('❌ Error:', err.message);
+  logger.error('❌ Error:', err.message);
   process.exit(1);
 });

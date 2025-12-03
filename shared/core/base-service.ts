@@ -9,7 +9,7 @@
 import { ConfigService } from './config-service.ts';
 import { logger, perf, context } from './logging-service.ts';
 import { DatabaseService } from './database-service.ts';
-import { nowISO } from 'sequential-utils/timestamps';
+import { nowISO } from '@sequential/sequential-utils/timestamps';
 
 // Service health status types
 export type ServiceHealthStatus = 'healthy' | 'unhealthy' | 'degraded';

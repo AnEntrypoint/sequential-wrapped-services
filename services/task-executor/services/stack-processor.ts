@@ -1,7 +1,7 @@
 import { supabaseClient } from "../config/supabase-config.ts";
 import { LOG_PREFIX_BASE } from "../utils/response-utils.ts";
 import { hostLog } from "../../_shared/utils.ts";
-import { nowISO } from 'sequential-utils/timestamps';
+import { nowISO } from '@sequential/sequential-utils/timestamps';
 
 export async function checkQueueBusy(baseUrl: string, serviceRoleKey: string): Promise<boolean> {
     try {

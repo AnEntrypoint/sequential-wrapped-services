@@ -6,7 +6,7 @@
  */
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { nowISO } from 'sequential-utils/timestamps';
+import { nowISO } from '@sequential/sequential-utils/timestamps';
 
 // Environment variables
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;

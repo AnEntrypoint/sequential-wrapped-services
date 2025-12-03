@@ -4,7 +4,7 @@
  */
 
 import { serve, ConnInfo } from "https://deno.land/std@0.201.0/http/server.ts";
-import { nowISO } from 'sequential-utils/timestamps';
+import { nowISO } from '@sequential/sequential-utils/timestamps';
 
 // Standardized response interfaces
 export interface ApiResponse<T = any> {

@@ -6,7 +6,7 @@
  */
 
 import logger from 'tasker-logging';
-import { nowISO } from 'sequential-utils/timestamps';
+import { nowISO } from '@sequential/sequential-utils/timestamps';
 import {
   database,
   fetchTaskFromDatabase as dbFetchTaskFromDatabase,

@@ -2,7 +2,7 @@
  * Utilities for formatting responses
  */
 
-import { nowISO } from 'sequential-utils/timestamps';
+import { nowISO } from '@sequential/sequential-utils/timestamps';
 
 /**
  * Safely stringify objects including handling of:

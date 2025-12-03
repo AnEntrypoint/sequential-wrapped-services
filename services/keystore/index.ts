@@ -4,7 +4,7 @@ import { BaseHttpHandler, HttpStatus, createHealthCheckResponse } from "../_shar
 import { config } from "../_shared/config-service.ts";
 import { BaseService, ServiceError, ServiceErrorType } from "../_shared/base-service.ts";
 import { logger } from "../_shared/logging-service.ts";
-import { nowISO } from 'sequential-utils/timestamps';
+import { nowISO } from '@sequential/sequential-utils/timestamps';
 
 // Type definitions
 interface IServerTimeResult {

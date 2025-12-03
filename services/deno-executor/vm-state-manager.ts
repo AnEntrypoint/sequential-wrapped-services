@@ -7,7 +7,7 @@
 // but no longer uses QuickJS - it's purely for Deno-based task state management
 import { createClient } from "npm:@supabase/supabase-js@2.39.3";
 import { hostLog, isUuid } from "../_shared/utils.ts";
-import { nowISO } from 'sequential-utils/timestamps';
+import { nowISO } from '@sequential/sequential-utils/timestamps';
 
 // ==============================
 // Types and Interfaces
